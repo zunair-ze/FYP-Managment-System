@@ -1,25 +1,60 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="add.aspx.cs" Inherits="FYP_ManagementSystem.add" %>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
 
-<!DOCTYPE html>
+namespace FYP_ManagementSystem
+{
+    public partial class add : System.Web.UI.Page
+    {
+        SqlConnection conn = new SqlConnection(@"Data Source=ZUNAIR_HP\SQLEXPRESS;Initial Catalog=test;Integrated Security=True");
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+            conn.Open();
+            if (type.SelectedValue == "no")
+            {
+                des.Enabled = false;
+                reg_no.Enabled = false;
+            }
+        }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <header>
-            <h2 style="text-align:center">Add Students or Advisors</h2>
-        </header>
-        <asp:DropDownList ID="type" runat="server">
-            <asp:ListItem Value="">select</asp:ListItem>
-            <asp:ListItem Value="student">Student</asp:ListItem>
-            <asp:ListItem Value="advisor">Advisor</asp:ListItem>
-        </asp:DropDownList>  <br />
-        <asp:TextBox ID="name" runat="server"></asp:TextBox> <br />
-        <asp:TextBox ID="fname" runat="server"></asp:TextBox> <br />
-        <asp:TextBox ID="reg_no" runat="server"></asp:TextBox> <br />
-        <asp:Button ID="btn1" runat="server" Text="Add" OnClick="btn1_Click" />
-    </form>
-</body>
-</html>
+        protected void btn1_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "insert into members values('" + name.Text + "','" + fname.Text + "','" +
+                            reg_no.Text + "',N'" + type.SelectedValue + "')";
+            cmd.ExecuteNonQuery();
+            type.SelectedValue = "";
+            name.Text = "";
+            fname.Text = "";
+            reg_no.Text = "";
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("home.aspx");
+        }
+
+        protected void list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (type.SelectedValue == "student")
+            {
+                des.Enabled = false;
+                reg_no.Enabled = true;
+            }
+            else if (type.SelectedValue == "advisor")
+            {
+                des.Enabled = true;
+                reg_no.Enabled = false;
+            }
+        }
+    }
+}
