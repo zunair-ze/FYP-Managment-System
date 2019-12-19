@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,12 +19,11 @@ namespace FYP_ManagementSystem
                 conn.Close();
             }
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select * from groups";
-            g.DataSource = cmd.ExecuteReader();
-            g.DataBind();
-            conn.Close();
-            conn.Open();
+
+            if (!IsPostBack)
+            {
+                show();
+            }
         }
 
         protected void add_Click(object sender, EventArgs e)
@@ -32,6 +31,22 @@ namespace FYP_ManagementSystem
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "insert into evaluation values('" + g.SelectedValue + "','" + total.Text + "','" + obtained.Text + "')";
             cmd.ExecuteNonQuery();
+        }
+        protected void show()
+        {
+            SqlCommand cmd = new SqlCommand("select * from groups", conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            g.DataSource = ds;
+            g.DataTextField = "students";
+            g.DataBind();
+            g.Items.Insert(0, new ListItem("Select a group", "0"));
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("home.aspx");
         }
     }
 }
