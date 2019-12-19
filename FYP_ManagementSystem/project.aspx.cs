@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,9 +24,16 @@ namespace FYP_ManagementSystem
         protected void add_Click(object sender, EventArgs e)
         {
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "insert into projects values('" + name.Text + "')";
+            
+            cmd.CommandText = "insert into projects values('" + name.Text + "', '" + des.Text + "')";
             cmd.ExecuteNonQuery();
             name.Text = "";
+            des.Text = "";
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("home.aspx");
         }
     }
 }
