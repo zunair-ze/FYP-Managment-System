@@ -1,0 +1,66 @@
+﻿body {
+    border: none;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+header {
+    background-color: #11a244;
+    margin: 1% 0%;
+}
+
+h2 {
+    text-align: center;
+    margin: 0;
+    padding: 6px 0px;
+    color: white;
+}
+
+#form1 {
+    margin-top: 2%;
+}
+
+#add {
+    border: none;
+    color: white;
+    background-color: #1b52b7;
+    padding: 5px 15px;
+    margin: 1% 0;
+}
+
+#Button1 {
+    float: right;
+    border: none;
+    color: white;
+    background-color: #1b52b7;
+    padding: 5px 15px;
+    margin-right: 1%;
+}
+
+.input {
+    margin-top: 1%;
+}
+
+#total, #obtained {
+    width: 11.7%;
+}
+
+footer {
+    background-color: #11a244;
+    margin: 27.2% 0% 0 0;
+    color: white;
+    font-style: italic;
+    padding: 5px;
+}
+
+    footer span:first-child {
+        float: left;
+        padding-left: 50px;
+        width: 70%;
+    }
